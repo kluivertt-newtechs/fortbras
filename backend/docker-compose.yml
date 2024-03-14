@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  db:
+    image: 'postgres:latest'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DATABASE=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - 'data:/var/local/postgresql'
+    networks:
+      - backend
+
+  backend:
+    container_name: 'backend-apontamento'
+    build: ./backend
+    ports:
+      - 3020:3000
+    env_file:
+      - './backend/.env.docker'
+    depends_on:
+      - db
+    volumes:
+      - './backend:/home/backend/'
+    networks:
+      - backend
+      - frontend
+    command: npm run dev
+
+  frontend:
+    container_name: 'frontend-apontamento'
+    build: ./frontend
+    ports:
+      - 4220:4200
+    depends_on:
+      - db
+      - backend
+    volumes:
+      - ./frontend:/home/frontend
+    networks:
+      - frontend
+    command: ng serve --configuration docker --host 0.0.0.0 --disable-host-check
+
+volumes: 
+ data: {}
+
+networks:
+  backend:
+  frontend:

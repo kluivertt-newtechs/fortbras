@@ -1,0 +1,79 @@
+{
+    "name": "middleware",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "bin": "dist/index.js",
+    "scripts": {
+        "build": "npx tsc",
+        "start": "node dist/index.js",
+        "dev": "concurrently \"npx tsc --watch\" \"nodemon --max-old-space-size=2048 -q dist/index.js --ignore dist/swagger-output.json\"",
+        "swagger": "node dist/swagger.js",
+        "pkg-loader": "run-script-os",
+        "pkg-loader:linux": "cd dist && pkg -t node16-win-x64 --config ../package.json -o ../bin/loader.exe loader.js",
+        "pkg-loader:win32": "cd dist && pkg -t node16-win-x64 --config ..\\package.json -o ..\\bin\\loader.exe loader.js",
+        "pkg-app": "pkg .",
+        "pkg": "npm run build && npm run pkg-app && npm run pkg-loader && cd .."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/archiver": "^6.0.2",
+        "@types/dotenv": "^8.2.0",
+        "@types/express": "^4.17.16",
+        "@types/multer": "^1.4.9",
+        "@types/node": "^18.11.18",
+        "@types/nodemailer": "^6.4.9",
+        "@types/uuid": "^9.0.7",
+        "concurrently": "^8.2.2",
+        "dotenv": "^16.0.3",
+        "nodemon": "^2.0.20",
+        "run-script-os": "^1.1.6",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "adm-zip": "^0.5.10",
+        "archiver": "^6.0.1",
+        "axios": "^1.3.2",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.20.1",
+        "cors": "^2.8.5",
+        "csv-parser": "^3.0.0",
+        "etl": "^0.7.0",
+        "exceljs": "^4.4.0",
+        "express": "^4.18.2",
+        "express-jwt": "^8.4.1",
+        "express-query-parser": "^1.3.3",
+        "global": "^4.4.0",
+        "jsonwebtoken": "^9.0.0",
+        "moment": "^2.29.4",
+        "multer": "^1.4.5-lts.1",
+        "nexe": "^4.0.0-rc.3",
+        "node-windows": "^1.0.0-beta.8",
+        "nodemailer": "^6.9.4",
+        "pg": "^8.8.0",
+        "pg-hstore": "^2.3.4",
+        "pkg": "^5.8.0",
+        "reflect-metadata": "^0.1.13",
+        "sequelize": "^6.28.0",
+        "sequelize-typescript": "^2.1.5",
+        "swagger-autogen": "^2.23.1",
+        "swagger-ui-express": "^5.0.0",
+        "unzipper": "^0.10.14",
+        "uuid": "^9.0.1"
+    },
+    "pkg": {
+        "scripts": [
+            "dist/**/*.js",
+            "dist/loader.js"
+        ],
+        "assets": [
+            "ui/**/*"
+        ],
+        "targets": [
+            "node16-win-x64"
+        ],
+        "outputPath": "bin"
+    }
+}
