@@ -1,0 +1,26 @@
+<po-page-default p-title="ÍNDICE" [p-actions]="pageActions">
+  <po-breadcrumb [p-items]="poBreadcrumbItem"> </po-breadcrumb>
+  <po-divider p-label="Tópico"></po-divider>
+
+  <po-list-view p-property-title="name" [p-items]="items.Relatorio">
+    <ng-template p-list-view-content-template let-item>
+      <div *ngFor="let item of item.result">
+        <div class="po-row po-mt-2">
+          <po-link [p-label]="item.name" [p-url]="item.url"></po-link>
+        </div>
+      </div>
+    </ng-template>
+  </po-list-view>
+
+  <po-divider p-label="Tópico"></po-divider>
+
+  <po-list-view p-property-title="name" [p-items]="items.Tabelas">
+    <ng-template p-list-view-content-template let-item>
+      <div *ngFor="let item of item.result">
+        <div class="po-row po-mt-2">
+          <po-link [p-label]="item.name" [p-url]="item.url"></po-link>
+        </div>
+      </div>
+    </ng-template>
+  </po-list-view>
+</po-page-default>

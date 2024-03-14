@@ -1,0 +1,53 @@
+<po-page-default p-title="Fontes" [p-actions]="pageActions">
+    <po-breadcrumb [p-items]="poBreadcrumbItem"> </po-breadcrumb>
+
+    <po-divider p-label=""></po-divider>
+
+    <po-widget class="po-row po-mt-4">
+        <div class="po-row">
+            <h4 class="po-mt-2">Programas ({{ totalProgramsCount }})</h4>
+        </div>
+        <div class="po-mt-2">
+            <po-accordion>
+                <ng-container *ngFor="let i of Object.keys(items)">
+                    <po-accordion-item
+                        class="po-row po-mt-2"
+                        [p-label]="i + ' (' + items[i].length + ')'"
+                    >
+                        <table style="width: 100%">
+                            <thead>
+                                <th style="width: 80%">Nome</th>
+                                <th style="width: 10%">Funções</th>
+                                <th style="width: 5%">Tabelas</th>
+                            </thead>
+                            <tbody class="zebrado">
+                                <tr *ngFor="let item of items[i]">
+                                    <td
+                                        class="celula-espacada"
+                                        style="width: 80%"
+                                    >
+                                        <a (click)="onViewDetail(item)">{{
+                                            item.name
+                                        }}</a>
+                                    </td>
+                                    <td
+                                        class="celula-espacada"
+                                        style="width: 10%"
+                                    >
+                                        {{ item.functions.length }}
+                                    </td>
+                                    <td
+                                        class="celula-espacada"
+                                        style="width: 10%"
+                                    >
+                                        {{ item.tables.length }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </po-accordion-item>
+                </ng-container>
+            </po-accordion>
+        </div>
+    </po-widget>
+</po-page-default>

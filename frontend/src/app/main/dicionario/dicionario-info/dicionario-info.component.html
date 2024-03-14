@@ -1,0 +1,126 @@
+<po-page-default p-title="DICIONÁRIO" [p-actions]="pageActions">
+    <po-breadcrumb [p-items]="poBreadcrumbItem"> </po-breadcrumb>
+    <div>
+        <po-loading-overlay
+            [hidden]="isHideLoadingExportar"
+            [p-screen-lock]="true"
+            p-text="Aguarde"
+        >
+        </po-loading-overlay>
+    </div>
+
+    <div>
+        <po-loading-overlay [hidden]="isHideLoading"></po-loading-overlay>
+    </div>
+
+    <po-divider p-label="Análise de Dicionários"></po-divider>
+
+    <div class="po-row">
+        <div class="po-md-12">
+            <div class="po-row">
+                <po-input
+                    class="po-md-4 po-mb-2"
+                    p-placeholder="Procurar"
+                    [(ngModel)]="filterText"
+                    (p-change-model)="onFilter($event)"
+                ></po-input>
+            </div>
+            <po-accordion>
+                <ng-container
+                    *ngFor="let item of accordionItems; let idx = index"
+                >
+                    <po-accordion-item
+                        [p-label]="
+                            item.label +
+                            ' (' +
+                            (item.diffs ? item.diffs.length : 0) +
+                            ')'
+                        "
+                        (p-expand)="onViewTable(idx, item.uuid, item.tabela)"
+                    >
+                        <ng-container *ngIf="!item.diffs">
+                            <div style="position: relative; height: 300px">
+                                <po-loading-overlay></po-loading-overlay>
+                            </div>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="item.diffs && item.diffs.length == 0"
+                        >
+                            <div class="po-row po-mt-5">
+                                <po-info
+                                    class="po-md-12"
+                                    p-label="Não há diferenças para esta tabela"
+                                ></po-info>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngFor="let diff of item.diffs">
+                            <ng-container *ngIf="diff.message">
+                                <div class="po-row po-mt-5">
+                                    <po-info
+                                        class="po-md-12"
+                                        [p-label]="diff.message"
+                                    ></po-info>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!diff.message">
+                                <div class="po-row">
+                                    <po-widget
+                                        class="po-md-6"
+                                        p-title="Dicionário 1"
+                                    >
+                                        <ng-container
+                                            *ngIf="diff.dict1.length == 0"
+                                        >
+                                            <po-info
+                                                class="po-md-12"
+                                                p-label="Não há registro para este dicionário"
+                                            ></po-info>
+                                        </ng-container>
+                                        <po-dynamic-view
+                                            *ngIf="diff.dict1.length"
+                                            [p-fields]="
+                                                diff.dict1[0].properties
+                                            "
+                                            [p-show-all-value]="true"
+                                            [p-value]="diff.dict1[0].data"
+                                        >
+                                        </po-dynamic-view>
+                                    </po-widget>
+
+                                    <po-widget
+                                        class="po-md-6"
+                                        p-title="Dicionário 2"
+                                    >
+                                        <ng-container
+                                            *ngIf="diff.dict2.length == 0"
+                                        >
+                                            <po-info
+                                                class="po-md-12"
+                                                p-label="Não há registro para este dicionário"
+                                            ></po-info>
+                                        </ng-container>
+                                        <po-dynamic-view
+                                            *ngIf="diff.dict2.length"
+                                            [p-fields]="
+                                                diff.dict2[0].properties
+                                            "
+                                            [p-show-all-value]="true"
+                                            [p-value]="diff.dict2[0].data"
+                                        >
+                                        </po-dynamic-view>
+                                    </po-widget>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </po-accordion-item>
+                </ng-container>
+            </po-accordion>
+            <!-- <div class="po-row po-button-container"> -->
+            <!--   <po-button nome="analisarDicionario" class="po-lg-3 po-mt-4" p-label="Carregar mais" (p-click)="loadMore()"> -->
+            <!--   </po-button> -->
+            <!-- </div> -->
+        </div>
+    </div>
+</po-page-default>
+
+<!-- [p-label]=" item.diffs && item.diffs.length > 0 ? item.labelX : item.label " -->

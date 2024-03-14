@@ -1,0 +1,50 @@
+<po-page-detail [p-title]="title" (p-back)="onBack()">
+    <po-breadcrumb
+        *ngIf="poBreadcrumbItem"
+        [p-items]="poBreadcrumbItem"
+    ></po-breadcrumb>
+    <po-tabs>
+        <po-tab p-label="Detalhes" [p-active]="true">
+            <po-widget p-title="Funções">
+                <po-accordion>
+                    <ng-container *ngIf="item">
+                        <po-accordion-item
+                            *ngFor="let i of item.functions"
+                            [p-label]="i.name"
+                        >
+                            <pre>{{ i.source }}</pre>
+                        </po-accordion-item>
+                    </ng-container>
+                </po-accordion>
+            </po-widget>
+            <po-widget p-title="Tabelas">
+                <po-accordion>
+                    <ng-container *ngIf="item">
+                        <po-accordion-item
+                            *ngFor="let i of item.tables"
+                            [p-label]="i.name"
+                        >
+                            <table>
+                                <thead>
+                                    <th>Campo</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let c of i.fields">
+                                        <td>{{ c }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <pre>{{ i.source }}</pre> -->
+                        </po-accordion-item>
+                    </ng-container>
+                </po-accordion>
+            </po-widget>
+        </po-tab>
+        <po-tab p-label="Código fonte">
+            <po-container>
+                <pre>{{ item.source }}</pre>
+            </po-container>
+        </po-tab>
+    </po-tabs>
+    <br /><br />
+</po-page-detail>

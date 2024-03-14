@@ -1,0 +1,144 @@
+<po-page-default p-title="HOME">
+  <div style="position: relative">
+    <form [formGroup]="myFormDicionario">
+      <div>
+        <po-loading-overlay
+          p-text="Enviando Arquivos"
+          [hidden]="isHideLoading"
+        ></po-loading-overlay>
+      </div>
+      <h2>DICIONÁRIO</h2>
+
+      <po-divider></po-divider>
+
+      <po-widget>
+        <div class="po-row">
+          <div class="po-md-6">
+            <po-upload
+              p-label="1º Dicionário"
+              name="dict1"
+              p-url="."
+              formControlName="dict1"
+              [p-hide-send-button]="true"
+              [p-drag-drop]="true"
+              [p-restrictions]="fileRestrictions"
+              [p-disabled]="dict1Desabled"
+              #dict1
+            >
+            </po-upload>
+            <app-required-field-warning
+              [form]="myFormDicionario"
+              [field]="'dict1'"
+              [isInput]="true"
+            ></app-required-field-warning>
+          </div>
+
+          <div class="po-md-6">
+            <po-upload
+              p-label="2º Dicionário"
+              name="dict2"
+              p-url="."
+              formControlName="dict2"
+              [p-hide-send-button]="true"
+              [p-drag-drop]="true"
+              [p-restrictions]="fileRestrictions"
+              [p-disabled]="dict2Desabled"
+              #dict2
+            >
+            </po-upload>
+            <app-required-field-warning
+              [form]="myFormDicionario"
+              [field]="'dict2'"
+              [isInput]="true"
+            ></app-required-field-warning>
+          </div>
+        </div>
+      </po-widget>
+
+      <po-widget>
+        <div class="po-md-6 po-mb-6">
+          <po-button
+            *ngIf="showEnviar"
+            nome="analisarDicionario"
+            class="po-lg-3"
+            p-label="Enviar"
+            p-kind="primary"
+            (p-click)="analisarDicionario1()"
+          >
+          </po-button>
+
+          <po-button
+            *ngIf="showAnalisar"
+            nome="analisarDicionario"
+            class="po-lg-3"
+            p-label="Analisar"
+            p-kind="primary"
+            (p-click)="analisarDicionario2()"
+          >
+          </po-button>
+
+          <po-button
+            nome="onClean"
+            class="po-lg-3"
+            p-label="Limpar"
+            p-kind="secondary"
+            (p-click)="onClean()"
+          >
+          </po-button>
+        </div>
+      </po-widget>
+    </form>
+  </div>
+
+  <po-progress *ngIf="!isHideLoading" [p-value]="percentDone"> </po-progress>
+
+  <div style="position: relative">
+    <form [formGroup]="myFormFonte">
+      <div class="po-mt-5">
+        <h2>FONTES</h2>
+      </div>
+
+      <po-divider></po-divider>
+      <div>
+        <po-loading-overlay
+          p-text="Enviando Arquivos"
+          [hidden]="isLoadingFonte"
+        ></po-loading-overlay>
+      </div>
+      <po-widget>
+        <div class="po-md-6">
+          <po-upload
+            p-label="Código Fonte"
+            formControlName="fonte"
+            name="fonte"
+            p-url="."
+            [p-hide-send-button]="true"
+            [p-drag-drop]="true"
+            [p-restrictions]="fileRestrictions"
+            #fonte
+          >
+          </po-upload>
+          <app-required-field-warning
+            [form]="myFormFonte"
+            [field]="'fonte'"
+            [isInput]="true"
+          ></app-required-field-warning>
+        </div>
+      </po-widget>
+
+      <po-widget>
+        <div class="po-md-6 po-mb-4">
+          <po-button
+            nome="analisarFonte"
+            class="po-lg-3"
+            p-label="Analisar"
+            (p-click)="analisarFonte()"
+          >
+          </po-button>
+        </div>
+      </po-widget>
+    </form>
+  </div>
+
+  <po-progress *ngIf="!isLoadingFonte" [p-value]="percentDone"> </po-progress>
+</po-page-default>
